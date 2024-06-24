@@ -1,0 +1,72 @@
+[
+    {
+        "name": "Ram",
+        "age": 25,
+        "occupation": "Engineer",
+        "address": "123 Maple Street",
+        "college": "University of Engineering"
+    },
+    {
+        "name": "Shyam",
+        "age": 30,
+        "occupation": "Designer",
+        "address": "456 Oak Street",
+        "college": "College of Design"
+    },
+    {
+        "name": "Sita",
+        "age": 35,
+        "occupation": "Teacher",
+        "address": "789 Pine Street",
+        "college": "Institute of Arts"
+    },
+    {
+        "name": "David",
+        "age": 28,
+        "occupation": "Developer",
+        "address": "101 Birch Avenue",
+        "college": "School of Development"
+    },
+    {
+        "name": "Ramesh",
+        "age": 42,
+        "occupation": "Manager",
+        "address": "202 Elm Street",
+        "college": "Academy of Management"
+    },
+    {
+        "name": "Suresh",
+        "age": 21,
+        "occupation": "Artist",
+        "address": "303 Cedar Blvd",
+        "college": "Faculty of Photography"
+    },
+    {
+        "name": "Supriya",
+        "age": 39,
+        "occupation": "Photographer",
+        "address": "123 Maple Street",
+        "college": "College of Design"
+    },
+    {
+        "name": "Hannah",
+        "age": 34,
+        "occupation": "Chef",
+        "address": "456 Oak Street",
+        "college": "University of Engineering"
+    },
+    {
+        "name": "Indra",
+        "age": 50,
+        "occupation": "Scientist",
+        "address": "789 Pine Street",
+        "college": "Institute of Arts"
+    },
+    {
+        "name": "Jenny",
+        "age": 29,
+        "occupation": "Architect",
+        "address": "101 Birch Avenue",
+        "college": "School of Development"
+    }
+]
