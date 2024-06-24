@@ -1,63 +1,53 @@
-const personData = [
-    { name: "Ram", age: 25, occupation: "Engineer", address: getRandomAddress(), college: getRandomCollege() },
-    { name: "Shyam", age: 30, occupation: "Designer", address: getRandomAddress(), college: getRandomCollege() },
-    { name: "Sita", age: 35, occupation: "Teacher", address: getRandomAddress(), college: getRandomCollege() },
-    { name: "David", age: 28, occupation: "Developer", address: getRandomAddress(), college: getRandomCollege() },
-    { name: "Ramesh", age: 42, occupation: "Manager", address: getRandomAddress(), college: getRandomCollege() },
-    { name: "Suresh", age: 21, occupation: "Artist", address: getRandomAddress(), college: getRandomCollege() },
-    { name: "Supriya", age: 39, occupation: "Photographer", address: getRandomAddress(), college: getRandomCollege() },
-    { name: "Hannah", age: 34, occupation: "Chef", address: getRandomAddress(), college: getRandomCollege() },
-    { name: "Indra", age: 50, occupation: "Scientist", address: getRandomAddress(), college: getRandomCollege() },
-    { name: "Jenny", age: 29, occupation: "Architect", address: getRandomAddress(), college: getRandomCollege() }
-];
-
-function getRandomAddress() {
-    const addresses = [
-        { country: "Nepal", city: "Kathmandu", street: "Random Street 123" },
-        { country: "Nepal", city: "Pokhara", street: "Another Road 456" },
-        { country: "India", city: "Mumbai", street: "Main Boulevard 789" },
-        { country: "India", city: "Delhi", street: "Central Avenue 567" }
-    ];
-    return addresses[Math.floor(Math.random() * addresses.length)];
+// Function to fetch data from a remote JSON file
+async function fetchData() {
+    try {
+        // Fetch the data from the remote URL
+        const response = await fetch('https://tanisha226.github.io/js_json/data.json');
+        const data = await response.json(); // Parse the JSON from the response
+        window.personData = data; // Store the data globally for use in other functions
+        populateNameList(data); // Call to populate the table with names after data is fetched
+    } catch (error) {
+        console.error('Error fetching data: ', error); // Log any errors during fetch
+    }
 }
 
-function getRandomCollege() {
-    const colleges = [
-        { country: "Nepal", name: "Nepal University" },
-        { country: "Nepal", name: "Himalayan College" },
-        { country: "India", name: "Indian Institute of Technology (IIT)" },
-        { country: "India", name: "Delhi College of Engineering" }
-    ];
-    return colleges[Math.floor(Math.random() * colleges.length)];
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Event listener added to the form
-    document.getElementById('searchForm').addEventListener('submit', function(event) {
-        event.preventDefault();  // Prevent the form from submitting in the traditional way
-        const inputName = document.getElementById('nameInput').value;  // Get the name typed by the user
-        displayPerson(inputName);  // Call the function to display the details of the person
+// Function to populate a table with names from the fetched data
+function populateNameList(data) {
+    const list = document.getElementById('nameList'); // Get the table body element where names will be listed
+    list.innerHTML = ''; // Clear any existing entries
+    data.forEach(person => {
+        const row = list.insertRow(); // Create a new row for each person
+        const cell = row.insertCell(0); // Create a new cell in the row
+        cell.textContent = person.name; // Set the text content of the cell to the person's name
     });
+}
+
+// Event listener for the form to handle the search
+document.getElementById('searchForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the default form submission behavior
+    const inputName = document.getElementById('nameInput').value; // Retrieve the name input by the user
+    displayPerson(inputName); // Call to display the details of the searched name
 });
 
-// Function to display the person's details using Bootstrap alerts
+// Function to display detailed information for a person when searched by name
 function displayPerson(name) {
-    const resultDiv = document.getElementById('result');
-    const person = personData.find(p => p.name.toLowerCase() === name.toLowerCase());  // Find the person by name
-    if (person) {
-        resultDiv.className = 'alert alert-success'; // Bootstrap class for success
+    const resultDiv = document.getElementById('result'); // Get the div where the results will be displayed
+    const person = window.personData.find(p => p.name.toLowerCase() === name.toLowerCase()); // Search for a person matching the input name (case-insensitive)
 
-        // Constructing the HTML content
-        resultDiv.innerHTML = `
-            <strong>Name:</strong> ${person.name} <br>
-            <strong>Age:</strong> ${person.age} <br>
-            <strong>Occupation:</strong> ${person.occupation} <br>
-            <strong>Address:</strong> ${person.address.street}, ${person.address.city}, ${person.address.country} <br>
-            <strong>College:</strong> ${person.college.name}, ${person.college.country}
-        `;
+    // Check if a person was found and update the resultDiv accordingly
+    if (person) {
+        resultDiv.className = 'alert alert-success'; // Use a Bootstrap class for success to style the result
+        resultDiv.innerHTML = `<strong>Name:</strong> ${person.name} <br>
+                               <strong>Age:</strong> ${person.age} <br>
+                               <strong>Occupation:</strong> ${person.occupation} <br>
+                               <strong>Address:</strong> ${person.address} <br>
+                               <strong>College:</strong> ${person.college}`; // Populate the div with person details
     } else {
-        resultDiv.className = 'alert alert-danger'; // Bootstrap class for danger
-        resultDiv.innerHTML = 'No person found with that name.';
+        resultDiv.className = 'alert alert-danger'; // Use a Bootstrap class for errors
+        resultDiv.innerHTML = 'No person found with that name.'; // Show an error message if no match was found
     }
     resultDiv.style.display = 'block'; // Ensure the result div is visible
 }
+
+// Call fetchData on page load to ensure data is ready before user interactions
+document.addEventListener('DOMContentLoaded', fetchData);
